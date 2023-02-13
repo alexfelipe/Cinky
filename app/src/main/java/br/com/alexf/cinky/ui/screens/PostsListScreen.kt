@@ -14,15 +14,16 @@ import br.com.alexf.cinky.model.Post
 import br.com.alexf.cinky.model.samplePostsList
 import br.com.alexf.cinky.ui.components.PostItem
 import br.com.alexf.cinky.ui.theme.CinkyTheme
+import br.com.alexf.cinky.ui.uistate.PostsListUiState
 
 @Composable
 fun PostsListScreen(
-    posts: List<Post>,
+    uiState: PostsListUiState,
     modifier: Modifier = Modifier,
     onPostClick: (Post) -> Unit = {}
 ) {
     LazyColumn(modifier) {
-        items(posts) { post ->
+        items(uiState.posts) { post ->
             PostItem(
                 post, Modifier
                     .padding(8.dp)
@@ -38,10 +39,24 @@ fun PostsListScreen(
 
 @Preview
 @Composable
-fun PostsListScreenPreview() {
+fun PostsListScreenWithoutPostsPreview() {
     CinkyTheme {
         Surface {
-            PostsListScreen(samplePostsList)
+            PostsListScreen(PostsListUiState())
+        }
+    }
+}
+
+@Preview
+@Composable
+fun PostsListScreenWithPostsPreview() {
+    CinkyTheme {
+        Surface {
+            PostsListScreen(
+                PostsListUiState(
+                    samplePostsList
+                )
+            )
         }
     }
 }

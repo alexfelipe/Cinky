@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Comment
 import androidx.compose.material.icons.filled.Menu
@@ -21,6 +22,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.ColorPainter
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
@@ -29,29 +33,40 @@ import br.com.alexf.cinky.model.Post
 import br.com.alexf.cinky.model.sampleAuthors
 import br.com.alexf.cinky.model.samplePostsList
 import br.com.alexf.cinky.ui.theme.CinkyTheme
+import coil.compose.AsyncImage
 
 @Composable
 fun PostItem(
     post: Post,
     modifier: Modifier = Modifier
 ) {
-    Column(
-        modifier,
-        verticalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
-        Row(
-            Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
+    Row(modifier, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        AsyncImage(
+            model = post.author.picture,
+            contentDescription = null,
+            Modifier
+                .size(50.dp)
+                .clip(CircleShape),
+            placeholder = ColorPainter(Color(0xFF8EA0B3)),
+            error = ColorPainter(Color(0xFF8EA0B3))
+        )
+        Column(
+            verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            AuthorWithNameAndId(author = post.author)
-            Icon(Icons.Default.MoreVert, contentDescription = "mais opções do post")
-        }
-        Text(text = post.message)
-        post.comments?.let { comments ->
-            Row {
-                Icon(Icons.Default.Comment, contentDescription = "ícone para comentários")
-                Spacer(modifier = Modifier.size(8.dp))
-                Text(text = "${comments.size}")
+            Row(
+                Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                AuthorWithNameAndId(author = post.author)
+                Icon(Icons.Default.MoreVert, contentDescription = "mais opções do post")
+            }
+            Text(text = post.message)
+            post.comments?.let { comments ->
+                Row {
+                    Icon(Icons.Default.Comment, contentDescription = "ícone para comentários")
+                    Spacer(modifier = Modifier.size(8.dp))
+                    Text(text = "${comments.size}")
+                }
             }
         }
     }

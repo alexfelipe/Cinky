@@ -35,6 +35,7 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.com.alexf.cinky.model.Post
+import br.com.alexf.cinky.model.currentUser
 import br.com.alexf.cinky.model.sampleAuthors
 import br.com.alexf.cinky.ui.theme.CinkyTheme
 
@@ -67,7 +68,7 @@ fun PostFormScreen(
                     .clickable {
                         onSendPost(
                             Post(
-                                author = sampleAuthors.random(),
+                                author = currentUser,
                                 message = message
                             )
                         )

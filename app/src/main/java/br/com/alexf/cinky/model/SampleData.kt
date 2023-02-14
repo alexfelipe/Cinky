@@ -13,7 +13,10 @@ val sampleAuthors = listOf(
     Author(id = "fran", name = "Fran"),
     Author(id = "denize", name = "Denize"),
     Author(id = "jhois", name = "Jhois"),
+    Author(id = "Mario", name = "Soutinho"),
 )
+
+val currentUser = sampleAuthors.random()
 
 val sampleComments = listOf(
     Comment(

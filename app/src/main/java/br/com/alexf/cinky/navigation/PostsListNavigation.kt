@@ -27,7 +27,10 @@ fun NavGraphBuilder.postsListScreen(
         }
         PostsListScreen(
             uiState,
-            onPostClick = onNavigateToPostDetails
+            onPostClick = onNavigateToPostDetails,
+            onRemovePost = {
+                dao.remove(it)
+            }
         )
     }
 }

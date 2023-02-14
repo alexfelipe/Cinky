@@ -20,6 +20,12 @@ class PostsDao {
         return _posts.value.find { it.id == id }
     }
 
+    fun remove(post: Post) {
+        _posts.update { posts ->
+            posts.filterNot { it.id == post.id }
+        }
+    }
+
     companion object {
         private val _posts = MutableStateFlow(samplePostsList)
     }

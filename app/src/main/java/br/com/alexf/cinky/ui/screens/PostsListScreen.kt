@@ -10,7 +10,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.com.alexf.cinky.model.Post
@@ -23,10 +22,16 @@ import br.com.alexf.cinky.ui.uistate.PostsListUiState
 fun PostsListScreen(
     uiState: PostsListUiState,
     modifier: Modifier = Modifier,
-    onPostClick: (Post) -> Unit = {}
+    onPostClick: (Post) -> Unit = {},
+    onRemovePost: (Post) -> Unit = {}
 ) {
     LazyColumn(modifier) {
-        items(uiState.posts) { post ->
+        items(
+            uiState.posts,
+            key = { post ->
+                post.id
+            }
+        ) { post ->
             PostItem(
                 post, Modifier
                     .padding(8.dp)
@@ -37,7 +42,10 @@ fun PostsListScreen(
                         },
                     ) {
                         onPostClick(post)
-                    }
+                    },
+                onRemovePost = {
+                    onRemovePost(post)
+                }
             )
             Divider()
         }
